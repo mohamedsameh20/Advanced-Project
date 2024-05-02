@@ -68,7 +68,7 @@ public abstract class Product implements Discountable{
 	}
 
 
-	public int getiD() {
+	public String getiD() {
 		return iD;
 	}
 
