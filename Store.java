@@ -113,7 +113,7 @@ public class Store {
         System.out.println("Product sold successfully to " + user.getName());
     }
 
-  //this method sells the user the items in his shopping cart
+  
     
     public void sell(User user) {  //this method sells the user the items in his shopping cart
     	
