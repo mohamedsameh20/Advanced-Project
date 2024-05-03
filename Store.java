@@ -87,7 +87,7 @@ public class Store {
              if (p.equals(product)) {
               int x = p.getNumberOfAvailable();
               x-=1;
-              p.setNumberOfAvailable(x-=1); 
+              p.setNumberOfAvailable(x); 
               break;
               }
          }
