@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+
 public class Store {
     private String storeName;
     private double balance;
