@@ -7,11 +7,11 @@ public class User implements Comparable<User> {
     private Cart shoppingCart;
     private Product[] purchasedProducts;
     
-    User(){
+    public User(){
       //No-Arg Constructor    
     }
     
-    User(String name, String email, double balance){  //Parameterized Constructor
+    public User(String name, String email, double balance){  //Parameterized Constructor
     this.name = name;
     this.email = email;
     this.balance = balance;
