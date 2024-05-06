@@ -10,8 +10,8 @@ public class Store {
       //No-Arg Constructor
     }
     
-    public Store(String storename, double balance){ //parameterized Constructor
-     this.storeName = storename;
+    public Store(String storeName, double balance){ //parameterized Constructor
+     this.storeName = storeName;
      this.balance = balance;
     }
     
