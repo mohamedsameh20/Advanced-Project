@@ -52,7 +52,6 @@ public abstract class Product implements Discountable{
             return price;
 	}
 
-
 	public void setPrice(double price) {
 		this.price = price;
 	}
@@ -68,7 +67,7 @@ public abstract class Product implements Discountable{
 	}
 
 
-	public int getiD() {
+	public String getiD() {
 		return iD;
 	}
 
@@ -111,6 +110,10 @@ public abstract class Product implements Discountable{
 	public void setDiscountExpiry(Date discountExpiry) {
 		this.discountExpiry = discountExpiry;
 	}
+
+    public boolean isHasDiscount() {
+        return hasDiscount;
+    }
 
     public double makeDiscount() {
         return (price - (price * discountValue));
