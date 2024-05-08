@@ -1,6 +1,7 @@
+package projecttest;
 import java.util.*;
 
-public class Clothes {
+public class Clothes extends Product{
 
     private String material;
     private String color;
@@ -51,15 +52,15 @@ public class Clothes {
 
     void setSize(char size, int numOfPieces) throws illegalArgumentException  {
         switch (size) {
-            case (s | S):
+            case ('s' | 'S'):
                 this.sSize = size;
                 break;
 
-            case (m | M):
+            case ('m' | 'M'):
                 this.mSize = size;
                 break;
 
-            case (l | L):
+            case ('l' | 'L'):
                 this.lSize = size;
                 break;
 
@@ -70,15 +71,15 @@ public class Clothes {
 
     int getSize(char size, int numOfPieces) {
         switch (size) {
-            case (s | S):
+            case ('s' | 'S'):
                 return this.sSize;
                 break;
 
-            case (m | M):
+            case ('m' | 'M'):
                 return this.mSize;
                 break;
 
-            case (l | L):
+            case ('l' | 'L'):
                 return this.lSize;
                 break;
 
@@ -86,5 +87,8 @@ public class Clothes {
                 break;
         }
     }
+
+    @Override
+    public void displayInfo(){};
 
 }

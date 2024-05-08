@@ -9,5 +9,5 @@ package projecttest;
  * @author Mohamed Elahmar
  */
 public interface Discountable {
-    
+    public double makeDiscount();
 }

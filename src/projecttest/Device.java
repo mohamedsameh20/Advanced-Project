@@ -1,4 +1,4 @@
-package p1;
+package projecttest;
 import java.util.Date;
 
 public class Device extends Product {
@@ -34,6 +34,4 @@ public class Device extends Product {
         ", its expiry date: "+getDiscountExpiry()+", model: "+getModel());
     }
 
-	public void makeDiscount(double discount, Product discountProduct) {	
-	}
 }

@@ -1,12 +1,16 @@
-public class Furniture{
+
+package projecttest;
+import java.util.Date;
+
+public class Furniture extends Product{
     private String material;
     private String color;
 
     Furniture(){}
     Furniture(String fMaterial, String fColor ,String pName,double pPrice 
-            ,int pNumberOfAvailable,String pManufacturer ,boolean pHasDiscount, double pDiscountValue ,Date pDicountExpiry ){
+            ,int pNumberOfAvailable,String pManufacturer ,boolean pHasDiscount, double pDiscountValue ,Date pDiscountExpiry ){
 
-                super(pName, pPrice,pNumberOfAvailable,pManufacturer,pHasDiscount,pDiscountValue,pDicountExpiry); 
+                super(pName, pPrice,pNumberOfAvailable,pManufacturer,pHasDiscount,pDiscountValue,pDiscountExpiry); 
                 this.material = fMaterial;
                 this.color = fColor;
     }
@@ -28,10 +32,10 @@ public class Furniture{
     }
 
     @Override
-    void dispalyInfo(){
-        System.out.println(this.material + "\n"+ this.color  +"\n"+ super.productName +"\n"+ super.price +"\n"
-        +"\n"+ super.numberOfAvailable +"\n"+super.iD +"\n"+ super.manufacturer +"\n"+ super.hasDiscount +"\n"+
-        super.discountValue +"\n"+ super.discountExpiry )
+    public void displayInfo(){
+        System.out.println(this.material + "\n"+ this.color  +"\n"+ super.getProductName() +"\n"+ super.getPrice() +"\n"
+        +"\n"+ super.getNumberOfAvailable() +"\n"+super.getiD() +"\n"+ super.getManufacturer() +"\n"+ super.isHasDiscount() +"\n"+
+        super.getDiscountValue() +"\n"+ super.getDiscountExpiry() );
     }
 
 

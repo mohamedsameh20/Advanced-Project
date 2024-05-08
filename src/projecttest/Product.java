@@ -1,4 +1,4 @@
-package p1;
+package projecttest;
 import java.util.Date;
 import java.util.UUID;
 

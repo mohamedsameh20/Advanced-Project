@@ -1,4 +1,4 @@
-package p1;
+package projecttest;
 import java.util.Date;
 
 public class Food extends Product{
@@ -23,7 +23,7 @@ public class Food extends Product{
 		System.out.println("Food name is: "+getProductName()+", of ID: "+getiD()+", Its price = "+getPrice()+
 		", number of available: "+getNumberOfAvailable()+", manufacturer: "+getManufacturer()+
 		", does it have discount? --> "+isHasDiscount()+", of "+getPrice()+" $"+
-		", its expiry date: "+getDiscountExpiry()+", writer: "+getWriter());
+		", its expiry date: "+getDiscountExpiry());
 	}
 
 	
