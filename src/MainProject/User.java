@@ -1,4 +1,4 @@
-package projecttest;
+package MainProject;
 import java.lang.Comparable;
 
 public class User implements Comparable<User> {

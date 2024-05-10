@@ -1,4 +1,4 @@
-package projecttest;
+package MainProject;
 import java.util.Date;
 
 public class Device extends Product {

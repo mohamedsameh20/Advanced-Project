@@ -1,5 +1,5 @@
 
-package projecttest;
+package MainProject;
 import java.util.Date;
 
 public class Furniture extends Product{

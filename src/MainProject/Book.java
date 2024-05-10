@@ -1,4 +1,4 @@
-package projecttest;
+package MainProject;
 import java.util.Date;
 
 public class Book extends Product {
@@ -34,6 +34,4 @@ public class Book extends Product {
         ", its expiry date: "+getDiscountExpiry()+", writer: "+getWriter());
     }
 
-	public void makeDiscount(double discount, Product discountProduct) {
-	}
 }

@@ -1,4 +1,4 @@
-package projecttest;
+package MainProject;
 import java.util.*;
 
 public class Clothes extends Product{
