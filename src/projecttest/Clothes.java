@@ -50,7 +50,7 @@ public class Clothes extends Product{
         return this.fitting;
     }
 
-    void setSize(char size, int numOfPieces) throws illegalArgumentException  {
+    void setSize(char size, int numOfPieces) throws IllegalArgumentException  {
         switch (size) {
             case ('s' | 'S'):
                 this.sSize = size;
@@ -64,7 +64,7 @@ public class Clothes extends Product{
                 this.lSize = size;
                 break;
 
-            default:throw new illegalArgumentException(); //throw illegalArgumentException exception 
+            default:throw new IllegalArgumentException(); //throw illegalArgumentException exception 
                 break;
         }
     }
@@ -73,18 +73,18 @@ public class Clothes extends Product{
         switch (size) {
             case ('s' | 'S'):
                 return this.sSize;
-                break;
+                
 
             case ('m' | 'M'):
                 return this.mSize;
-                break;
+                
 
             case ('l' | 'L'):
                 return this.lSize;
-                break;
+                
 
-            default:throw new illegalArgumentException(); //throw illegalArgumentException exception  
-                break;
+            default:throw new IllegalArgumentException(); //throw illegalArgumentException exception  
+                
         }
     }
 
