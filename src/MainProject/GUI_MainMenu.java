@@ -1,4 +1,3 @@
-
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -13,17 +12,17 @@ import java.util.ArrayList;
 
 
 
-public class MainMenu extends Application {
+public class GUI_MainMenu extends Application {
 
     @Override
     public void start(Stage primaryStage)
     {
         BorderPane pane = new BorderPane();
-        pane.setStyle("-fx-background-color: #ff7f50");
+        pane.setStyle("-fx-background-color: #E2FAFA");
 
         ArrayList<Scene> scenes = new ArrayList<Scene>();
         Pane root = welcome_page(pane,primaryStage,scenes);
-        Scene scene = new Scene(root, 1200, 1000);
+        Scene scene = new Scene(root, 800, 800);
         primaryStage.setTitle("Welcome"); // Set the stage title
         primaryStage.setScene(scene); // Put scene in stage
         primaryStage.show();
