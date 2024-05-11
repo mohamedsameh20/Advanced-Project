@@ -16,8 +16,8 @@ public class Clothes extends Product{
     // may be an exception due to number of clothes and i,m,l size
     Clothes(String c_material, String c_color, String c_fitting, int c_sSize, int c_mSize, int c_lSize,
             String pName, double pPrice, int pNumberOfAvailable, String pManufacturer, boolean pHasDiscount,
-            double pDiscountValue, Date pDicountExpiry) {
-        super(pName, pPrice, pNumberOfAvailable, pManufacturer, pHasDiscount, pDiscountValue, pDicountExpiry);
+            double pDiscountValue, Date pDicountExpiry ,String genre, String url) {
+        super(pName, pPrice, pNumberOfAvailable, pManufacturer, pHasDiscount, pDiscountValue, pDicountExpiry,genre,url);
         this.material = c_material;
         this.color = c_color;
         this.fitting = c_fitting;
@@ -65,11 +65,11 @@ public class Clothes extends Product{
                 break;
 
             default:throw new IllegalArgumentException(); //throw illegalArgumentException exception 
-                break;
+                
         }
     }
 
-    int getSize(char size, int numOfPieces) {
+    int getSize(char size) {
         switch (size) {
             case ('s' | 'S'):
                 return this.sSize;

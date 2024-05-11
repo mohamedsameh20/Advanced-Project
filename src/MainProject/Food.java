@@ -1,18 +1,21 @@
 package MainProject;
+import java.text.DateFormat;  //new
+import java.text.SimpleDateFormat; //new
 import java.util.Date;
 
 public class Food extends Product{
 
     private Date expiryDate;
 
-	public Food(String pn, double p, int noa, String m, boolean hd, double dv, Date de, Date ed) {
-	  super(pn, p, noa, m, hd, dv, de);
+	public Food(String pn, double p, int noa, String m, boolean hd, double dv, Date de, Date ed,String genre, String url) {
+	  super(pn, p, noa, m, hd, dv, de,genre, url);
 	  this.expiryDate=ed;
 	}
 
 
-    public Date getExpiryDate() {
-        return expiryDate;
+    public String getExpiryDate() {									//new
+		DateFormat df = new SimpleDateFormat();
+		return df.format(expiryDate);
     }
 
     public void setExpiryDate(Date expiryDate) {

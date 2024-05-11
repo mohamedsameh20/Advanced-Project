@@ -5,10 +5,10 @@ public class Book extends Product {
     private String writer;
 
     public Book(String pn, double p, int noa, String m, boolean hd, double dv, 
-		Date de, String w) throws Exception {
-        super(pn, p, noa, m, hd, dv, de);
+		Date de, String w,String genre, String url) throws Exception {
+        super(pn, p, noa, m, hd, dv, de, genre, url);           //new
 	    
-        if (w == null || w.isBlank() || w.isEmpty()) {
+        if (w == null || w.isEmpty()) {        //new
         throw new Exception("Writer name can't be empty !!");}
 	    
         this.writer = w;
@@ -20,7 +20,7 @@ public class Book extends Product {
 
     public void setWriter(String writer) throws Exception {
 	    
-        if (writer == null || writer.isBlank() || writer.isEmpty()) {
+        if (writer == null  || writer.isEmpty()) {  //new
         throw new Exception("Writer name can't be empty !!");}
 	    
         this.writer = writer;
