@@ -36,8 +36,7 @@ public class Store {
     }
 
 
-    
-    
+     
     public void addProduct(Product product) {
        // Resizing the array of products to add a new product   
        Product[] newProductList = new Product[productsList.length +1]; 
