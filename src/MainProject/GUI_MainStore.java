@@ -37,13 +37,14 @@ public class GUI_MainStore {
 
 
     static Pane Menu(BorderPane pane,Stage primarystage, ArrayList<Scene> scenes){
-        VBox vbox = new VBox(20);
-        vbox.setStyle("-fx-background-color: #ff6347");
-        vbox.setPadding(new Insets(20,20,20,20));
-        vbox.setPrefWidth(200);
-        Label lb = new Label("Your Products");
-        lb.setFont(new Font("Arial",16));
-        vbox.getChildren().add(lb);
+    	VBox vbox = new VBox(20);
+    	vbox.setStyle("-fx-background-color: #75DADA");
+    	vbox.setPadding(new Insets(20,20,20,20));
+    	vbox.setPrefWidth(200);
+    	Label lb = new Label("Your Products");
+    	lb.setFont(new Font("Arial",16));
+    	lb.setStyle("-fx-text-fill: #014C4C");
+    	vbox.getChildren().add(lb);
         ArrayList<Product> list = U.getShoppingCart().getCartProducts();
         cb.setConverter(new StringConverter<Product>() {
             @Override
@@ -119,14 +120,14 @@ public class GUI_MainStore {
     }
 
     static Pane user(BorderPane pane,Stage primarystage, ArrayList<Scene> scenes){
-        HBox hbox = new HBox(120);
-        hbox.setStyle("-fx-background-color: #dc143c");
-        hbox.setPadding(new Insets(20,20,20,20));
-        hbox.setPrefWidth(200);
-        Label name = new Label("Hi, " + U.getName());
-        name.setStyle("-fx-text-fill: #483d8b; -fx-font-size: 20px;");
+    	HBox hbox = new HBox(120);
+    	hbox.setStyle("-fx-background-color: #13A3A3");
+    	hbox.setPadding(new Insets(20,20,20,20));
+    	hbox.setPrefWidth(200);
+    	Label name = new Label("Hi, " + U.getName());
+    	name.setStyle("-fx-text-fill: #DFF8F8; -fx-font-size: 20px;");
 
-        balance.setStyle("-fx-text-fill: #483d8b; -fx-font-size: 20px;");
+        balance.setStyle("-fx-text-fill: #DFF8F8; -fx-font-size: 20px;");
         Button gtc = new Button("Go to Cart");
         gtc.setOnAction(e -> {
             Scene cartPage = new Scene(cart_page(primarystage,scenes),sceneX,sceneY);
@@ -144,7 +145,7 @@ public class GUI_MainStore {
                     + "-fx-base: #3c3f41;";
 
             if (pane.getStyle().equals(darkModeStyles)) {
-                FadeTransition ft = new FadeTransition(Duration.millis(1000), pane);
+                FadeTransition ft = new FadeTransition(Duration.millis(500), pane);
                 ft.setFromValue(0.0);
                 ft.setToValue(1.0);
                 ft.play();
@@ -153,12 +154,12 @@ public class GUI_MainStore {
                 balance.setStyle(originalBalanceStyle);
                 darkModeButton.setText("Dark Mode");
             } else {
-                FadeTransition ft = new FadeTransition(Duration.millis(1000), pane);
+                FadeTransition ft = new FadeTransition(Duration.millis(500), pane);
                 ft.setFromValue(0.0);
                 ft.setToValue(1.0);
                 ft.play();
                 pane.setStyle(darkModeStyles);
-                hbox.setStyle("-fx-background-color: #2b2b2b;");
+                hbox.setStyle("-fx-background-color: #2b2b2b;"); 
                 balance.setStyle("-fx-text-fill: #f0f0f0; -fx-font-size: 20px;");
                 darkModeButton.setText("Light Mode");
             }
@@ -187,7 +188,7 @@ public class GUI_MainStore {
             }
         });
 
-        flow.setStyle("-fx-background-color: #ff7f50;");
+        flow.setStyle("-fx-background-color: #0000;");
         for(int i = 0; i<S.getProducts().length;i++){
             Cell C = new Cell(S.getProducts()[i] , primarystage,scenes);
             C.set_image(S.getProducts()[i].getImage_url());
@@ -216,7 +217,7 @@ public class GUI_MainStore {
             }
         });
 
-        flow.setStyle("-fx-background-color: #ff7f50;");
+        flow.setStyle("-fx-background-color: #dff8f8;");
         for(int i = 0; i<S.getProducts().length;i++){
             if(Objects.equals(S.getProducts()[i].get_genre(), s)){
                 Cell C = new Cell(S.getProducts()[i] , primarystage,scenes);
@@ -229,7 +230,7 @@ public class GUI_MainStore {
 
     static Pane productInfo(Product P,Stage primarystage, ArrayList<Scene> scenes){
         GridPane grid = new GridPane();
-        grid.setStyle("-fx-background-color: #ff7f50;-fx-text-fill: #483d8b; -fx-font-size: 20px;");
+        grid.setStyle("-fx-background-color: #E2FAFA;-fx-text-fill: #483d8b; -fx-font-size: 20px;");
         grid.setPadding(new Insets(40,40,40,40));
         grid.setHgap(40);
         grid.setVgap(40);
@@ -255,6 +256,8 @@ public class GUI_MainStore {
         Button back = new Button("Back");
         Button buy = new Button("BUY");
         Button add = new Button("ADD TO CART");
+        back.setVisible(true);
+        
         buy.setOnAction(e -> {
                     Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
                     confirmation.setHeaderText("CONFIRMATION");
@@ -290,7 +293,7 @@ public class GUI_MainStore {
         back.setOnAction(e -> primarystage.setScene(scenes.get(0)));
 
         //Adding buttons to the grid pane
-        grid.add(back,0,8,1,1);
+        grid.add(back,2,0,1,1);
         grid.add(btnBar,1,0);
         // Labels of Product's names
         if(P != null) {
@@ -388,7 +391,7 @@ public class GUI_MainStore {
 
     static class Cell extends Pane {
         public Cell( Product P, Stage primarystage, ArrayList<Scene> scenes){
-            setStyle("-fx-text-fill: #483d8b;-fx-background-color: #ff6347");
+            setStyle("-fx-text-fill: #483d8b;-fx-background-color: #DFF8F8");
             this.setPrefSize(200,350);
             Label lb = new Label(P.getProductName());
             Label price = new Label("$"+Double.toString(P.getPrice()));
@@ -463,7 +466,7 @@ public class GUI_MainStore {
             this.getChildren().add(hbox);
         }
         public Cell( Product P, Stage primarystage, ArrayList<Scene> scenes, String justToUseDiffConstructor){
-            setStyle("-fx-text-fill: #483d8b;-fx-background-color: #ff6347");
+            setStyle("-fx-text-fill: #483d8b;-fx-background-color: #DFF8F8");
             this.setPrefSize(200,350);
             Label lb = new Label(P.getProductName());
             lb.setStyle("-fx-text-fill: #483d8b; -fx-font-size: 20px;");
@@ -545,10 +548,10 @@ public class GUI_MainStore {
 
     static Pane cart_page(Stage primarystage, ArrayList<Scene> scenes){
         BorderPane bord = new BorderPane();
-        bord.setStyle("-fx-background-color: #ff7f50;-fx-text-fill: #483d8b;");
+        bord.setStyle("-fx-background-color: #E2FAFA;-fx-text-fill: #483d8b;");
         bord.setPadding(new Insets(40,40,40,40));
         HBox hbox = new HBox(100);
-        hbox.setStyle("-fx-background-color: #ff7f50;-fx-text-fill: #483d8b; -fx-font-size: 20px;");
+        hbox.setStyle("-fx-background-color: #E2FAFA;-fx-text-fill: #483d8b; -fx-font-size: 20px;");
         Label lb = new Label("My Products: ");
         lb.setFont(new Font("Arial",20));
         lb.setAlignment(Pos.CENTER);
@@ -594,7 +597,7 @@ public class GUI_MainStore {
         hbox.getChildren().addAll(lb,balance_copy,btBar);
         bord.setTop(hbox);
         FlowPane flow = new FlowPane();
-        flow.setStyle("-fx-background-color: #ff7f50");
+        flow.setStyle("-fx-background-color: #dff8f8");
         flow.setOrientation(Orientation.HORIZONTAL);
         flow.setHgap(20);
         flow.setVgap(20);
@@ -604,7 +607,7 @@ public class GUI_MainStore {
 
         if(cartProducts.isEmpty()){
             Label lb2 = new Label("Your cart is Empty!!");
-            lb2.setStyle("-fx-background-color: #ff7f50;-fx-text-fill: #483d8b; -fx-font-size: 20px;");
+            lb2.setStyle("-fx-background-color: #E2FAFA;-fx-text-fill: #483d8b; -fx-font-size: 20px;");
             bord.setCenter(lb2);
         }
         else{
