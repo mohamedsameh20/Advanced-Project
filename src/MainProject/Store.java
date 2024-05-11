@@ -105,13 +105,13 @@ public class Store {
        user.setBalance(user.getBalance() - product.getProductPrice());
      
      
-       //Updating user purchased products
-       Product[] oldUserPurchasedProducts = user.getPurchasedProducts();
+       / //Updating user purchased products
+       Product[] oldUserPurchasedProducts = new Product[user.getPurchasedProducts().length];            // new
        Product[] newUserPurchasedProducts = new Product[oldUserPurchasedProducts.length +1];
-     
-       for(int i=0; i<oldUserPurchasedProducts.length; i++) {
-         newUserPurchasedProducts[i]= oldUserPurchasedProducts[i];   //Copying previous products
-       }
+
+        for(int i=0; i<user.getPurchasedProducts().length; i++) {                                       // new
+            oldUserPurchasedProducts[i]= user.getPurchasedProducts()[i];                                // new
+        }                                                                                               // new
       
        newUserPurchasedProducts[oldUserPurchasedProducts.length] = product;   // Adding the new product
      
