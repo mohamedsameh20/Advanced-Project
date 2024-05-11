@@ -1,6 +1,5 @@
-
-package application;
-
 public interface Discountable {
-    public double makeDiscount();
+	//void makeDiscount(double discount, Product discountProduct);
+
+	public double makeDiscount();
 }

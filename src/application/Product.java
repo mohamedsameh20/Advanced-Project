@@ -1,4 +1,3 @@
-package application;
 import java.util.Date;
 import java.util.UUID;
 
@@ -12,6 +11,8 @@ public abstract class Product implements Discountable{
 	private boolean hasDiscount;
 	private double discountValue;
 	private Date discountExpiry;
+	private String Image_url;		//new
+	private String genre; 			//new
 	public abstract void displayInfo();
 
 
@@ -23,7 +24,7 @@ public abstract class Product implements Discountable{
         this.iD=UUID.randomUUID().toString();
     
     }
-	Product(String pn, double p, int noa, String m,boolean hd, double dv, Date de) {
+	Product(String pn, double p, int noa, String m,boolean hd, double dv, Date de,String genre, String url) {			//new
 		this.productName = pn;
 		this.price = p;
 		this.numberOfAvailable = noa;
@@ -32,6 +33,8 @@ public abstract class Product implements Discountable{
 		this.hasDiscount = hd;
 		this.discountValue = dv;
 		this.discountExpiry = de;
+		this.genre = genre;			//new
+		this.Image_url = url;		//new
 	}
 	
 
@@ -39,6 +42,13 @@ public abstract class Product implements Discountable{
 		return productName;
 	}
 
+	public void setImage_url(String url ) {  this.Image_url = url;}		//new
+
+	public String getImage_url() {return Image_url;}					//new
+
+	public void set_genre(String genre ) {  this.genre = genre;}		//new
+
+	public String get_genre() {return genre;}						//new
 
 	public void setProductName(String productName) {
 		this.productName = productName;
@@ -114,7 +124,6 @@ public abstract class Product implements Discountable{
     public boolean isHasDiscount() {
         return hasDiscount;
     }
-
 
     public double makeDiscount() {
         return (price - (price * discountValue));

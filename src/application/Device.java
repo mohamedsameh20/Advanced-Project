@@ -1,14 +1,13 @@
-package application;
 import java.util.Date;
 
 public class Device extends Product {
     private String model;
 
     public Device(String pn, double p, int noa, String m, boolean hd,
-    			  double dv, Date de, String ml) throws Exception{
-        super(pn, p, noa, m, hd, dv, de);
+    			  double dv, Date de, String ml,String genre ,String url) throws Exception{         //new
+        super(pn, p, noa, m, hd, dv, de, genre,url);        //new
         
-        if (ml == null || ml.isBlank() || ml.isEmpty()) {
+        if (ml == null || ml.isEmpty()) {  //new
         throw new Exception("Model can't be empty !!");}
         
         this.model = ml;
@@ -20,7 +19,7 @@ public class Device extends Product {
 
     public void setModel(String model) throws Exception{
     	
-    	if (model == null || model.isBlank() || model.isEmpty()) {
+    	if (model == null || model.isEmpty()) {  //new
     	throw new Exception("Model can't be empty !!");}
     	
         this.model = model;
@@ -34,4 +33,6 @@ public class Device extends Product {
         ", its expiry date: "+getDiscountExpiry()+", model: "+getModel());
     }
 
+	public void makeDiscount(double discount, Product discountProduct) {	
+	}
 }

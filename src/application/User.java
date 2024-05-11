@@ -1,12 +1,12 @@
-package application;
 import java.lang.Comparable;
+import java.util.ArrayList;
 
 public class User implements Comparable<User> {
     private String name;
     private String email;
     private double balance;
-    private Cart shoppingCart = new Cart();
-    private Product[] purchasedProducts;
+    private Cart shoppingCart = new Cart(new ArrayList<Product>());
+    private Product[] purchasedProducts = {};  // new
     
     public User(){
       //No-Arg Constructor    
@@ -60,8 +60,19 @@ public class User implements Comparable<User> {
     public Product[] getPurchasedProducts(){
      return purchasedProducts;     
     }
-    
-    
+
+    public void setPurchasedProducts(Product[] arr){
+        this.purchasedProducts = arr;
+    }
+
+    public double totalPrice(){
+        double totalSum = 0;
+        for(int i =0;i<shoppingCart.getCartProducts().size();i++){
+
+            totalSum+= shoppingCart.getCartProducts().get(i).getPrice();
+        }
+        return totalSum;
+    }
     @Override
     //Implementation of compareTo method defined in the Comparable interface
     public int compareTo(User user){
@@ -74,10 +85,5 @@ public class User implements Comparable<User> {
         else 
         return 0;    
     }
-
-	public void setPurchasedProducts(Product[] newUserPurchasedProducts) {
-		// TODO Auto-generated method stub
-		this.purchasedProducts=newUserPurchasedProducts;
-	}
     
 }

@@ -1,11 +1,7 @@
-package application;
-
 import java.util.ArrayList;
 public class Cart {
-	private ArrayList<Product> cartProducts;
-	Cart(){
-		 this.cartProducts = new ArrayList<>();
-	}
+	private ArrayList<Product> cartProducts ;
+	Cart(){}
 	public Cart(ArrayList<Product> cartProducts) {
 		
 		if (cartProducts == null) {	

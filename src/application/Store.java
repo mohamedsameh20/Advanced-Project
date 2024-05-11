@@ -1,11 +1,10 @@
-package application;
 import java.util.ArrayList;
 
 public class Store {
     private String storeName;
     private double balance;
-    private Product[] productsList = new Product[0];
-    private User[] usersList = new User[0];
+    private Product[] productsList = {};
+    private User[] usersList = {};
     
     public Store(){
       //No-Arg Constructor
@@ -34,16 +33,22 @@ public class Store {
     public double getBalance() {
      return balance;
     }
+
+
     
     
     public void addProduct(Product product) {
-    	Product[] oldProductList = getProductsList();
-        Product[] newProductList = new Product[oldProductList.length + 1];
-        System.arraycopy(oldProductList, 0, newProductList, 0, oldProductList.length);
-        newProductList[oldProductList.length] = product;
-        setProductsList(newProductList);
-    } 
-    
+       // Resizing the array of products to add a new product   
+       Product[] newProductList = new Product[productsList.length +1]; 
+     
+       for(int i=0; i<productsList.length; i++) {
+        newProductList[i]= productsList[i];  //Copying previous products
+       }
+     
+       newProductList[productsList.length] = product;  // Adding the new product
+       productsList = newProductList;
+    }
+    public Product[] getProducts() {return productsList; }
     
     public void addUser(User user) {
        // Resizing the array of Users to add a new user
@@ -92,23 +97,24 @@ public class Store {
           }
        }
 
-         
+
        // Updating store balance
        balance += product.getPrice();
 
-         
        // Updating User balance
        user.setBalance(user.getBalance() - product.getPrice());
-     
-     
+
        //Updating user purchased products
-       Product[] oldUserPurchasedProducts = user.getPurchasedProducts();
+       Product[] oldUserPurchasedProducts = new Product[user.getPurchasedProducts().length];            // new
        Product[] newUserPurchasedProducts = new Product[oldUserPurchasedProducts.length +1];
-     
+
+        for(int i=0; i<user.getPurchasedProducts().length; i++) {                                       // new
+            oldUserPurchasedProducts[i]= user.getPurchasedProducts()[i];                                // new
+        }                                                                                               // new
+
        for(int i=0; i<oldUserPurchasedProducts.length; i++) {
          newUserPurchasedProducts[i]= oldUserPurchasedProducts[i];   //Copying previous products
        }
-      
        newUserPurchasedProducts[oldUserPurchasedProducts.length] = product;   // Adding the new product
      
        user.setPurchasedProducts(newUserPurchasedProducts); 
@@ -118,44 +124,29 @@ public class Store {
     
     
     
-    public void sell(User user) {  //this method sells the user the items in his shopping cart
+    public Boolean sell(User user) {  //this method sells the user the items in his shopping cart
         Cart userCart = user.getShoppingCart();
     	ArrayList<Product> cartProducts = userCart.getCartProducts();
+
+        if(cartProducts.isEmpty()){return false;}                                                                       //new
+
     	double totalCartPrice = userCart.calculateTotal();
 
         // Checking if the user has enough balance to purchase all products in the cart
     	if (totalCartPrice > user.getBalance()) {
     	  System.out.println("Insufficient balance to purchase all products in the cart.");
-    	  return;
     	}
-
-        
         // Selling each product in the cart
-        for (Product product : cartProducts) {
-            double productPrice = product.getPrice();
+        int i =0;
+        boolean flag = true;
+        while (flag){                                                                   //new
+            double productPrice = cartProducts.get(i).getPrice();
             user.setBalance(user.getBalance() - productPrice);   // Reducing user's balance
     	    balance += productPrice;     // Increasing store's balance
-    	    product.setNumberOfAvailable(product.getNumberOfAvailable() -1);  // Decrease the product quantity from the store
-    	    userCart.removeProduct(product);  // Clear the product from the user's cart
-    	} 
-    	     	    
-    }
-
-	public Product[] getProductsList() {
-		return productsList;
-	}
-
-	public void setProductsList(Product[] productsList) {
-		this.productsList = productsList;
-	}
-
-	public User[] getUsersList() {
-		return usersList;
-	}
-
-	public void setUsersList(User[] usersList) {
-		this.usersList = usersList;
-	}
-
-	
+            cartProducts.get(i).setNumberOfAvailable(cartProducts.get(i).getNumberOfAvailable() -1);  // Decrease the product quantity from the store
+    	    userCart.removeProduct(cartProducts.get(i));  // Clear the product from the user's cart
+            if(cartProducts.isEmpty()){flag = false;}
+    	}
+        return true;
+    } 	    
 }
