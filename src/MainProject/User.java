@@ -2,12 +2,14 @@ package MainProject;
 import java.lang.Comparable;
 import java.util.ArrayList;
 
+
 public class User implements Comparable<User> {
     private String name;
     private String email;
     private double balance;
     private Cart shoppingCart = new Cart(new ArrayList<Product>());
     private Product[] purchasedProducts = {};  
+
     
     public User(){
       //No-Arg Constructor    
