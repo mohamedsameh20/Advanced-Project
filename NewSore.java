@@ -106,12 +106,12 @@ public class Store {
       int i =0;
       boolean flag = true;
       while (flag){                                                                  
-          double productPrice = cartProducts.get(i).getPrice();
-          user.setBalance(user.getBalance() - productPrice);   // Reducing user's balance
-  	      balance += productPrice;     // Increasing store's balance
-          cartProducts.get(i).setNumberOfAvailable(cartProducts.get(i).getNumberOfAvailable() -1);  // Decrease the product quantity from the store
-  	       userCart.removeProduct(cartProducts.get(i));  // Clear the product from the user's cart
-          if(cartProducts.isEmpty()){flag = false;}
+        double productPrice = cartProducts.get(i).getPrice();
+        user.setBalance(user.getBalance() - productPrice);   // Reducing user's balance
+  	    balance += productPrice;     // Increasing store's balance
+        cartProducts.get(i).setNumberOfAvailable(cartProducts.get(i).getNumberOfAvailable() -1);  // Decrease the product quantity from the store
+  	    userCart.removeProduct(cartProducts.get(i));  // Clear the product from the user's cart
+        if(cartProducts.isEmpty()){flag = false;}
   	   }
       return true;
   } 	    
