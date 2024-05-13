@@ -63,8 +63,9 @@ public class Store {
       return;
     }
 
-    // Updating product quantity 
-    product.decrementAvailable(); 
+    // Updating product quantity
+    product.decrementAvailable();
+    
 
     // Updating store balance
     balance += product.getPrice();
