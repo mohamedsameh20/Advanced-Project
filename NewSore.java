@@ -33,20 +33,18 @@ public class Store {
   }
 
   public void addProduct(Product product) {
-    productsList.add(product); // Add product directly to the ArrayList
+    productsList.add(product); 
   }
 
   public ArrayList<Product> getProducts() {
-    // Return the original ArrayList
     return productsList;
   }
 
   public void addUser(User user) {
-    usersList.add(user); // Add user directly to the ArrayList
+    usersList.add(user); 
   }
 
-  public ArrayList<User> getUsers() {
-    // Return the original ArrayList 
+  public ArrayList<User> getUsers() { 
     return usersList;
   }
 
@@ -66,14 +64,7 @@ public class Store {
     }
 
     // Updating product quantity 
-   // for (Product p : productsList ) {
-     //   if (p.equals(product)) {
-       //   int x = p.getNumberOfAvailable();
-         // x-=1;
-         // p.setNumberOfAvailable(x); 
-         // break;
-       // }
-    // }
+    product.decrementAvailable(); 
 
     // Updating store balance
     balance += product.getPrice();
@@ -96,32 +87,32 @@ public class Store {
     user.setPurchasedProducts(newUserPurchasedProducts);
     System.out.println("Product sold successfully to " + user.getName());
   }
+  
 
-  public Boolean sell(User user) {  // This method sells the user the items in his shopping cart
-    Cart userCart = user.getShoppingCart();
-    ArrayList<Product> cartProducts = userCart.getCartProducts();
+  public Boolean sell(User user) {  //this method sells the user the items in his shopping cart
+      Cart userCart = user.getShoppingCart();
+  	  ArrayList<Product> cartProducts = userCart.getCartProducts();
 
-    if (cartProducts.isEmpty()) {
-      return false;
-    }
+      if(cartProducts.isEmpty()){return false;}                                                                       
 
-    double totalCartPrice = userCart.calculateTotal();
+  	  double totalCartPrice = userCart.calculateTotal();
 
-    // Checking if the user has enough balance to purchase all products in the cart
-    if (totalCartPrice > user.getBalance()) {
-      System.out.println("Insufficient balance to purchase all products in the cart.");
-      return false;
-    }
-
-    // Selling each product in the cart
-    int i = 0;
-    while (i < cartProducts.size()) {  // Use size() for ArrayList
-      double productPrice = cartProducts.get(i).getPrice();
-      user.setBalance(user.getBalance() - productPrice);  // Reducing user's balance
-      balance += productPrice;  // Increasing store's balance
-      cartProducts.get(i).decreaseNumberOfAvailable(); // Update product quantity
-      i++; // Increment counter after processing the current product
-    }
-    return true;
-  }
+      // Checking if the user has enough balance to purchase all products in the cart
+  	 if (totalCartPrice > user.getBalance()) {
+  	  System.out.println("Insufficient balance to purchase all products in the cart.");
+  	 }
+    
+      // Selling each product in the cart
+      int i =0;
+      boolean flag = true;
+      while (flag){                                                                  
+          double productPrice = cartProducts.get(i).getPrice();
+          user.setBalance(user.getBalance() - productPrice);   // Reducing user's balance
+  	      balance += productPrice;     // Increasing store's balance
+          cartProducts.get(i).setNumberOfAvailable(cartProducts.get(i).getNumberOfAvailable() -1);  // Decrease the product quantity from the store
+  	       userCart.removeProduct(cartProducts.get(i));  // Clear the product from the user's cart
+          if(cartProducts.isEmpty()){flag = false;}
+  	   }
+      return true;
+  } 	    
 }
