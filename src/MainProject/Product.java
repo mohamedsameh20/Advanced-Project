@@ -26,16 +26,17 @@ public abstract class Product implements Discountable, Comparable<Product>{
     
     }
 	Product(String pn, double p, int noa, String m,boolean hd, double dv, Date de,String genre, String url) {			//new
-		this.productName = pn;
-		this.price = p;
-		this.numberOfAvailable = noa;
+        this.setProductName(pn);
+        this.setPrice(p);
+        this.setNumberOfAvailable(noa);
 		this.iD=UUID.randomUUID().toString();
-		this.manufacturer = m;
-		this.hasDiscount = hd;
-		this.discountValue = dv;
-		this.discountExpiry = de;
+        this.setManufacturer(m);
+        this.setHasDiscount(hd);
+        this.setDiscountValue(dv);
+        this.setDiscountExpiry(de);
 		this.genre = genre;			//new
-		this.Image_url = url;		//new
+        this.set_genre(genre);		//new
+		this.setImage_url(url);		//new
 	}
 	
 
@@ -65,6 +66,9 @@ public abstract class Product implements Discountable, Comparable<Product>{
 	}
 
 	public void setPrice(double price) {
+        if (price < 0)
+            throw new IllegalArgumentException("Price cannot be negative");
+        else
 		this.price = price;
 	}
 
@@ -110,6 +114,9 @@ public abstract class Product implements Discountable, Comparable<Product>{
 
 
 	public void setDiscountValue(double discountValue) {
+        if (discountValue < 0 || discountValue > 1)
+            throw new IllegalArgumentException("Discount value must be between 0 and 1");
+        else
 		this.discountValue = discountValue;
 	}
 
@@ -130,6 +137,13 @@ public abstract class Product implements Discountable, Comparable<Product>{
     public double makeDiscount() {
         return (price - (price * discountValue));
 		
+    }
+
+    public void decrementAvailable() {
+        if(numberOfAvailable > 0)
+            numberOfAvailable--;
+        else
+            throw new IllegalArgumentException("No more available products");
     }
 
     @Override
