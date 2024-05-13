@@ -7,8 +7,8 @@ public class Furniture extends Product{
     private String color;
 
     Furniture(){}
-    Furniture(String fMaterial, String fColor ,String pName,double pPrice 
-            ,int pNumberOfAvailable,String pManufacturer ,boolean pHasDiscount, double pDiscountValue ,Date pDiscountExpiry ,String genre ,String url ){         //new
+    Furniture(String pName,double pPrice,int pNumberOfAvailable,String pManufacturer ,boolean pHasDiscount,
+              double pDiscountValue ,Date pDiscountExpiry,String fMaterial, String fColor ,String genre ,String url ){         //new
 
                 super(pName, pPrice,pNumberOfAvailable,pManufacturer,pHasDiscount,pDiscountValue,pDiscountExpiry,genre,url);        //new
                 this.material = fMaterial;

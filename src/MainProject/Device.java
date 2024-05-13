@@ -8,7 +8,7 @@ public class Device extends Product {
     			  double dv, Date de, String ml,String genre ,String url) throws Exception{         //new
         super(pn, p, noa, m, hd, dv, de, genre,url);        //new
         
-        if (ml == null || ml.isBlank() || ml.isEmpty()) {
+        if (ml == null  || ml.isEmpty()) {
         throw new Exception("Model can't be empty !!");}
         
         this.model = ml;

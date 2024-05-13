@@ -14,9 +14,8 @@ public class Clothes extends Product{
     }
 
     // may be an exception due to number of clothes and i,m,l size
-    Clothes(String c_material, String c_color, String c_fitting, int c_sSize, int c_mSize, int c_lSize,
-            String pName, double pPrice, int pNumberOfAvailable, String pManufacturer, boolean pHasDiscount,
-            double pDiscountValue, Date pDicountExpiry ,String genre, String url) {
+    Clothes(String pName, double pPrice, int pNumberOfAvailable,String pManufacturer, boolean pHasDiscount, double pDiscountValue,
+            Date pDicountExpiry,String c_material, String c_color, String c_fitting, int c_sSize, int c_mSize, int c_lSize ,String genre, String url) {
         super(pName, pPrice, pNumberOfAvailable, pManufacturer, pHasDiscount, pDiscountValue, pDicountExpiry,genre,url);
         this.material = c_material;
         this.color = c_color;
