@@ -1,3 +1,5 @@
+package MainProject;
+
 import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -25,7 +27,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 
-public class GUI_MainStore {
+public class  GUI_MainStore {
 
     @FXML static ChoiceBox<Product> cb = new ChoiceBox<Product>();
     static User U = GUI_Data.UserDetails();

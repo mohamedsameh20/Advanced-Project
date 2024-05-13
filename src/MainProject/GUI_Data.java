@@ -1,3 +1,12 @@
+package MainProject;
+
+import MainProject.Book;
+import MainProject.Clothes;
+import MainProject.Device;
+import MainProject.Food;
+import MainProject.Furniture;
+import MainProject.Store;
+import MainProject.User;
 import java.util.Date;
 
 public class GUI_Data {
