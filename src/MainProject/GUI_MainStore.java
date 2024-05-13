@@ -267,20 +267,21 @@ public class GUI_MainStore {
                     confirmation.setContentText("Confirm the purchase of this product!! ");
                     Optional<ButtonType> result = confirmation.showAndWait();
                     if (result.isPresent() && result.get() == ButtonType.OK) {
-                        if(U.getBalance()<P.getPrice()){
+                        try{
+                            S.sell(P,U);
+                            balance.setText("Your Balance: " +U.getBalance());
+                            balance_copy.setText("Your Balance: " +U.getBalance());
+                            cb.setItems(FXCollections.observableArrayList(U.getShoppingCart().getCartProducts()));
+                            Alert done = new Alert(Alert.AlertType.INFORMATION);
+                            done.setHeaderText("Done");
+                            done.setContentText("Product purchased successfully!! ");
+                            done.showAndWait();
+                        }
+                        catch (IllegalArgumentException low_balance_exception){
                             Alert warning = new Alert(Alert.AlertType.WARNING);
                             warning.setHeaderText("WARNING");
-                            warning.setContentText("Insufficient Balance!!\n" + "Please charge up your balance ");
-                            warning.showAndWait();
-                        }
-                        else{
-                        S.sell( P ,U);
-                        balance.setText("Your Balance: " + Double.toString(U.getBalance()));
-                        Alert done = new Alert(Alert.AlertType.INFORMATION);
-                        done.setHeaderText("Done");
-                        done.setContentText("Product purchased successfully!! ");
-                        done.showAndWait();
-                        }
+                            warning.setContentText(low_balance_exception.getMessage());
+                            warning.showAndWait();}
                     }
                 });
         add.setOnAction(e -> {
