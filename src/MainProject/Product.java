@@ -2,7 +2,7 @@ package MainProject;
 import java.util.Date;
 import java.util.UUID;
 
-public abstract class Product implements Discountable{
+public abstract class Product implements Discountable, Comparable<Product>{
 
 	private String productName;
 	private double price;
@@ -12,8 +12,8 @@ public abstract class Product implements Discountable{
 	private boolean hasDiscount;
 	private double discountValue;
 	private Date discountExpiry;
-        private String Image_url;
-        private String genre;
+    private String Image_url;
+    private String genre;
 	public abstract void displayInfo();
 
 
@@ -130,6 +130,16 @@ public abstract class Product implements Discountable{
     public double makeDiscount() {
         return (price - (price * discountValue));
 		
+    }
+
+    @Override
+    public int compareTo(Product o) {
+        if(this.getPrice() > o.getPrice())
+            return 1;
+        else if(this.getPrice() < o.getPrice())
+            return -1;
+        else
+            return 0;
     }
 
 
