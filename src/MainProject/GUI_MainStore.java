@@ -27,7 +27,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 
-public class  GUI_MainStore {
+public class GUI_MainStore {
 
     @FXML static ChoiceBox<Product> cb = new ChoiceBox<Product>();
     static User U = GUI_Data.UserDetails();
@@ -48,6 +48,7 @@ public class  GUI_MainStore {
     	lb.setStyle("-fx-text-fill: #014C4C");
     	vbox.getChildren().add(lb);
         ArrayList<Product> list = U.getShoppingCart().getCartProducts();
+
         cb.setConverter(new StringConverter<Product>() {
             @Override
             public String toString(Product product) {
@@ -356,32 +357,32 @@ public class  GUI_MainStore {
             }
 
             switch (P.get_genre()){
-                case "Devices":     Device d = (Device) P;
-                                    Label model = new Label(d.getModel());
+                case "Devices":
+                                    Label model = new Label(((Device)P).getModel());
                                     grid.add(model, 1, 6, 1, 1);
                     break;
-                case "Books":       Book b = (Book) P;
-                                    Label writer = new Label(b.getWriter());
+                case "Books":
+                                    Label writer = new Label(((Book)P).getWriter());
                                     grid.add(writer, 1, 6, 1, 1);
                     break;
-                case "Furniture":   Furniture f = (Furniture) P;
-                                    Label F_material = new Label(f.getMaterial());
-                                    Label F_color = new Label(f.getColor());
+                case "Furniture":
+                                    Label F_material = new Label(((Furniture)P).getMaterial());
+                                    Label F_color = new Label(((Furniture)P).getColor());
                                     grid.add(F_material, 1, 6, 1, 1);
                                     grid.add(F_color, 1, 7, 1, 1);
                     break;
-                case "Clothes":     Clothes c = (Clothes) P;
-                                    Label C_material = new Label(c.getMaterial());
-                                    Label C_color = new Label(c.getColor());
-                                    Label fitting = new Label(c.getFitting());
-                                    Label Sizes = new Label(c.getSize('s') +" ,"+ c.getSize('m') +" ,"+ c.getSize('l') );
+                case "Clothes":
+                                    Label C_material = new Label(((Clothes)P).getMaterial());
+                                    Label C_color = new Label(((Clothes)P).getColor());
+                                    Label fitting = new Label(((Clothes)P).getFitting());
+                                    Label Sizes = new Label(((Clothes)P).getSize('s') +" ,"+ ((Clothes)P).getSize('m') +" ,"+ ((Clothes)P).getSize('l') );
                                     grid.add(C_material, 1, 6, 1, 1);
                                     grid.add(C_color, 1, 7, 1, 1);
                                     grid.add(fitting, 3, 6, 1, 1);
                                     grid.add(Sizes, 3, 7, 1, 1);
                     break;
-                case "Food":        Food fo = (Food)P;
-                                    Label expire = new Label(fo.getExpiryDate());
+                case "Food":
+                                    Label expire = new Label(((Food)P).getExpiryDate());
                                     grid.add(expire, 1, 6, 1, 1);
                     break;
             }
@@ -435,23 +436,23 @@ public class  GUI_MainStore {
                 confirmation.setContentText("Confirm the purchase of this product!! ");
                 Optional<ButtonType> result = confirmation.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
-                    if(U.getBalance()<P.getPrice()){
+                    try{
+                    S.sell(P,U);
+                        balance.setText("Your Balance: " +U.getBalance());
+                        balance_copy.setText("Your Balance: " +U.getBalance());
+
+                        cb.setItems(FXCollections.observableArrayList(U.getShoppingCart().getCartProducts()));
+                        Alert done = new Alert(Alert.AlertType.INFORMATION);
+                        done.setHeaderText("Done");
+                        done.setContentText("Product purchased successfully!! ");
+                        done.showAndWait();
+                    }
+                    catch (IllegalArgumentException low_balance_exception){
                         Alert warning = new Alert(Alert.AlertType.WARNING);
                         warning.setHeaderText("WARNING");
-                        warning.setContentText("Insufficient Balance!!\n" + "Please refile your balance ");
-                        warning.showAndWait();
-                    }
-                    else{
-                    S.sell(P,U);
-                    balance.setText("Your Balance: " +U.getBalance());
-                    balance_copy.setText("Your Balance: " +U.getBalance());
+                        warning.setContentText(low_balance_exception.getMessage());
+                        warning.showAndWait();}
 
-                    cb.setItems(FXCollections.observableArrayList(U.getShoppingCart().getCartProducts()));
-                    Alert done = new Alert(Alert.AlertType.INFORMATION);
-                    done.setHeaderText("Done");
-                    done.setContentText("Product purchased successfully!! ");
-                    done.showAndWait();
-                    }
                 }
             });
             add.setOnAction(e -> {
@@ -502,17 +503,11 @@ public class  GUI_MainStore {
                 confirmation.setContentText("Confirm the purchase of this product!! ");
                 Optional<ButtonType> result = confirmation.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
-                    if(U.getBalance()<P.getPrice()){
-                        Alert warning = new Alert(Alert.AlertType.WARNING);
-                        warning.setHeaderText("WARNING");
-                        warning.setContentText("Insufficient Balance!!\n" + "Please refile your balance ");
-                        warning.showAndWait();
-                    }
-                    else{
+                    try{
                         S.sell(P,U);
-                        U.getShoppingCart().removeProduct(P);
                         balance.setText("Your Balance: " +U.getBalance());
                         balance_copy.setText("Your Balance: " +U.getBalance());
+                        U.getShoppingCart().removeProduct(P);
                         cb.setItems(FXCollections.observableArrayList(U.getShoppingCart().getCartProducts()));
                         Scene updated_cart = new Scene(cart_page(primarystage,scenes),sceneX,sceneY);
                         primarystage.setScene(updated_cart);
@@ -521,7 +516,13 @@ public class  GUI_MainStore {
                         done.setContentText("Product purchased successfully!! ");
                         done.showAndWait();
                     }
-                }
+                    catch (IllegalArgumentException low_balance_exception){
+                        Alert warning = new Alert(Alert.AlertType.WARNING);
+                        warning.setHeaderText("WARNING");
+                        warning.setContentText(low_balance_exception.getMessage());
+                        warning.showAndWait();}
+
+                    }
             });
             remove.setOnAction(e -> {
                 U.getShoppingCart().removeProduct(P);
@@ -573,18 +574,19 @@ public class  GUI_MainStore {
                     warning.setContentText("Insufficient Balance!!\n" + "Please charge up your balance ");
                     warning.showAndWait();
                 } else {
-                    if(S.sell(U)){
+                    try{
+                        S.sell(U);
                         balance.setText("Your Balance: " + Double.toString(U.getBalance()));
                         balance_copy.setText("Your Balance: " +Double.toString(U.getBalance()));
                         Scene updated_cart = new Scene(cart_page(primarystage,scenes),sceneX,sceneY);
                         primarystage.setScene(updated_cart);
-
                         cb.setItems(FXCollections.observableArrayList(U.getShoppingCart().getCartProducts()));
                         Alert done = new Alert(Alert.AlertType.INFORMATION);
                         done.setHeaderText("Done");
                         done.setContentText("Products purchased successfully!! ");
                         done.showAndWait();
-                    }else{Alert warning = new Alert(Alert.AlertType.WARNING);
+                    }catch (IllegalArgumentException empty_cart){
+                        Alert warning = new Alert(Alert.AlertType.WARNING);
                         warning.setHeaderText("WARNING");
                         warning.setContentText("Your cart is empty!!");
                         warning.showAndWait();}

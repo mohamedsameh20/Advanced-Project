@@ -66,8 +66,11 @@ public class Store {
     }
     
     
-    public void sell(Product product, User user) {  //this method sells the user a product	
-       //Checking if the product is available in the store 
+    public void sell(Product product, User user) throws IllegalArgumentException {  //this method sells the user a product
+       //Checking if the product is available in the store
+        if(user.getBalance()<product.getPrice()){
+            throw new IllegalArgumentException("Insufficient Balance!!\n" + "Please refile your balance ");
+        }
        boolean productAvailable = false;
      
        for (Product p : productsList) {
@@ -127,11 +130,11 @@ public class Store {
     
     
     
-    public Boolean sell(User user) {  //this method sells the user the items in his shopping cart
+    public void sell(User user) throws IndexOutOfBoundsException {  //this method sells the user the items in his shopping cart
         Cart userCart = user.getShoppingCart();
     	ArrayList<Product> cartProducts = userCart.getCartProducts();
 
-        if(cartProducts.isEmpty()){return false;}                                                                       
+        if(cartProducts.isEmpty()){ throw new IndexOutOfBoundsException();}
 
     	double totalCartPrice = userCart.calculateTotal();
 
@@ -150,6 +153,6 @@ public class Store {
     	    userCart.removeProduct(cartProducts.get(i));  // Clear the product from the user's cart
             if(cartProducts.isEmpty()){flag = false;}
     	}
-        return true;
-    } 	    
+
+    }
 }

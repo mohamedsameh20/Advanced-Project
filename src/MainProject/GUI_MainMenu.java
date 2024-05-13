@@ -1,6 +1,5 @@
 package MainProject;
-
-//import javafx.animation.FadeTransition;
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
