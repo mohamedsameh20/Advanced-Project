@@ -28,13 +28,11 @@ public class GUI_MainMenu extends Application {
         primaryStage.setScene(scene); // Put scene in stage
         primaryStage.show();
 
-
-
     }
     void MainStore(BorderPane pane,Stage primaryStage, ArrayList<Scene> scenes){
         pane.setTop(GUI_MainStore.user(pane,primaryStage, scenes));
         pane.setLeft(GUI_MainStore.Menu(pane,primaryStage,scenes));
-        pane.setCenter(GUI_MainStore.store(primaryStage,scenes));
+        pane.setCenter(GUI_MainStore.store(primaryStage,scenes,false));
         Scene Home = new Scene( pane, 1200, 1000);
         scenes.add(Home);
     }

@@ -23,6 +23,7 @@ import javafx.event.EventHandler;
 import java.util.ArrayList;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -101,7 +102,7 @@ public class GUI_MainStore {
                 if (rb != null) {
                     String s = rb.getText();
                     switch (s) {
-                        case "All":       pane.setCenter(store(primarystage,scenes));
+                        case "All":       pane.setCenter(store(primarystage,scenes,false));
                                           break;
                         case "Devices":   pane.setCenter(sorted_store("Devices",primarystage,scenes));
                                           break;
@@ -117,8 +118,40 @@ public class GUI_MainStore {
 
                 }
             }
+
         });
 
+        Label lb2 = new Label("Sort by: ");
+
+        ToggleGroup tg2 = new ToggleGroup();
+
+        // create radioButtons
+        RadioButton rb7 = new RadioButton("Price");
+        RadioButton rb8 = new RadioButton("Price reversed");
+        rb7.setToggleGroup(tg2);
+        rb8.setToggleGroup(tg2);
+        tg2.selectedToggleProperty().addListener(new ChangeListener<Toggle>()
+        {
+            public void changed(ObservableValue<? extends Toggle> ob,
+                                Toggle o, Toggle n)
+            {
+
+                RadioButton rb = (RadioButton)tg2.getSelectedToggle();
+                if (rb != null) {
+                    String s = rb.getText();
+                    switch (s) {
+                        case "Price":       pane.setCenter(store(primarystage,scenes,false));
+                            break;
+                        case "Price reversed":   pane.setCenter(store(primarystage,scenes,true));
+                            break;
+                    }
+
+                }
+            }
+
+        });
+
+        vbox.getChildren().addAll(lb2,rb7,rb8);
         return vbox;
     }
 
@@ -171,7 +204,7 @@ public class GUI_MainStore {
         return hbox;
     }
 
-    static ScrollPane store(Stage primarystage, ArrayList<Scene> scenes){
+    static ScrollPane store(Stage primarystage, ArrayList<Scene> scenes,Boolean rev_sort){
         FlowPane flow = new FlowPane();
         flow.setOrientation(Orientation.HORIZONTAL);
         flow.setHgap(20);
@@ -192,9 +225,12 @@ public class GUI_MainStore {
         });
 
         flow.setStyle("-fx-background-color: #0000;");
-        for(int i = 0; i<S.getProducts().length;i++){
-            Cell C = new Cell(S.getProducts()[i] , primarystage,scenes);
-            C.set_image(S.getProducts()[i].getImage_url());
+        if(rev_sort){Collections.sort(S.getProducts(),Collections.reverseOrder());}
+        else{Collections.sort(S.getProducts());}
+
+        for(int i = 0; i<S.getProducts().size();i++){
+            Cell C = new Cell(S.getProducts().get(i) , primarystage,scenes);
+            C.set_image(S.getProducts().get(i).getImage_url());
             flow.getChildren().add(C);
         }
         return scroll;
@@ -220,11 +256,11 @@ public class GUI_MainStore {
             }
         });
 
-        flow.setStyle("-fx-background-color: #dff8f8;");
-        for(int i = 0; i<S.getProducts().length;i++){
-            if(Objects.equals(S.getProducts()[i].get_genre(), s)){
-                Cell C = new Cell(S.getProducts()[i] , primarystage,scenes);
-                C.set_image(S.getProducts()[i].getImage_url());
+        flow.setStyle("-fx-background-color: #0000;");
+        for(int i = 0; i<S.getProducts().size();i++){
+            if(Objects.equals(S.getProducts().get(i).get_genre(), s)){
+                Cell C = new Cell(S.getProducts().get(i) , primarystage,scenes);
+                C.set_image(S.getProducts().get(i).getImage_url());
                 flow.getChildren().add(C);
             }
         }
@@ -277,7 +313,7 @@ public class GUI_MainStore {
                             done.setContentText("Product purchased successfully!! ");
                             done.showAndWait();
                         }
-                        catch (IllegalArgumentException low_balance_exception){
+                        catch (LowBalanceException low_balance_exception){
                             Alert warning = new Alert(Alert.AlertType.WARNING);
                             warning.setHeaderText("WARNING");
                             warning.setContentText(low_balance_exception.getMessage());
@@ -448,7 +484,7 @@ public class GUI_MainStore {
                         done.setContentText("Product purchased successfully!! ");
                         done.showAndWait();
                     }
-                    catch (IllegalArgumentException low_balance_exception){
+                    catch (LowBalanceException low_balance_exception){
                         Alert warning = new Alert(Alert.AlertType.WARNING);
                         warning.setHeaderText("WARNING");
                         warning.setContentText(low_balance_exception.getMessage());
@@ -474,8 +510,14 @@ public class GUI_MainStore {
             this.setPrefSize(200,350);
             Label lb = new Label(P.getProductName());
             lb.setStyle("-fx-text-fill: #483d8b; -fx-font-size: 20px;");
+            Label price = new Label("$"+Double.toString(P.getPrice()));
+            price.setStyle("-fx-text-fill: #483d8b; -fx-font-size: 18px;");
+            price.setAlignment(Pos.CENTER);
+
             lb.layoutXProperty().bind(this.widthProperty().divide(4));
             lb.layoutYProperty().bind(this.heightProperty().divide(1.4));
+            price.layoutXProperty().bind(this.widthProperty().divide(3.5));
+            price.layoutYProperty().bind(this.heightProperty().divide(1.25));
             lb.setOnMouseEntered(new EventHandler<MouseEvent>(){
                 @Override public void handle(MouseEvent e) {
                     lb.setScaleX(1.5);
@@ -495,7 +537,7 @@ public class GUI_MainStore {
                     lb.setScaleY(1);
                 }
             });
-            this.getChildren().add(lb);
+            this.getChildren().addAll(lb,price);
             Button remove = new Button("Remove");
             Button buy = new Button("Buy");
             buy.setOnAction(e -> {
@@ -517,7 +559,7 @@ public class GUI_MainStore {
                         done.setContentText("Product purchased successfully!! ");
                         done.showAndWait();
                     }
-                    catch (IllegalArgumentException low_balance_exception){
+                    catch (LowBalanceException low_balance_exception){
                         Alert warning = new Alert(Alert.AlertType.WARNING);
                         warning.setHeaderText("WARNING");
                         warning.setContentText(low_balance_exception.getMessage());
@@ -552,10 +594,10 @@ public class GUI_MainStore {
 
     static Pane cart_page(Stage primarystage, ArrayList<Scene> scenes){
         BorderPane bord = new BorderPane();
-        bord.setStyle("-fx-background-color: #E2FAFA;-fx-text-fill: #483d8b;");
+        bord.setStyle("-fx-background-color: #00FFFF;-fx-text-fill: #483d8b;");
         bord.setPadding(new Insets(40,40,40,40));
         HBox hbox = new HBox(100);
-        hbox.setStyle("-fx-background-color: #E2FAFA;-fx-text-fill: #483d8b; -fx-font-size: 20px;");
+        hbox.setStyle("-fx-background-color: #00FFFF;-fx-text-fill: #483d8b; -fx-font-size: 20px;");
         Label lb = new Label("My Products: ");
         lb.setFont(new Font("Arial",20));
         lb.setAlignment(Pos.CENTER);
@@ -577,8 +619,8 @@ public class GUI_MainStore {
                 } else {
                     try{
                         S.sell(U);
-                        balance.setText("Your Balance: " + Double.toString(U.getBalance()));
-                        balance_copy.setText("Your Balance: " +Double.toString(U.getBalance()));
+                        balance.setText("Your Balance: " + U.getBalance());
+                        balance_copy.setText("Your Balance: " +U.getBalance());
                         Scene updated_cart = new Scene(cart_page(primarystage,scenes),sceneX,sceneY);
                         primarystage.setScene(updated_cart);
                         cb.setItems(FXCollections.observableArrayList(U.getShoppingCart().getCartProducts()));
@@ -586,10 +628,10 @@ public class GUI_MainStore {
                         done.setHeaderText("Done");
                         done.setContentText("Products purchased successfully!! ");
                         done.showAndWait();
-                    }catch (IllegalArgumentException empty_cart){
+                    }catch (CartEmptyException empty_cart){
                         Alert warning = new Alert(Alert.AlertType.WARNING);
                         warning.setHeaderText("WARNING");
-                        warning.setContentText("Your cart is empty!!");
+                        warning.setContentText(empty_cart.getMessage());
                         warning.showAndWait();}
 
 
@@ -602,7 +644,7 @@ public class GUI_MainStore {
         hbox.getChildren().addAll(lb,balance_copy,btBar);
         bord.setTop(hbox);
         FlowPane flow = new FlowPane();
-        flow.setStyle("-fx-background-color: #dff8f8");
+        flow.setStyle("-fx-background-color: #0000");
         flow.setOrientation(Orientation.HORIZONTAL);
         flow.setHgap(20);
         flow.setVgap(20);
@@ -612,7 +654,7 @@ public class GUI_MainStore {
 
         if(cartProducts.isEmpty()){
             Label lb2 = new Label("Your cart is Empty!!");
-            lb2.setStyle("-fx-background-color: #E2FAFA;-fx-text-fill: #483d8b; -fx-font-size: 20px;");
+            lb2.setStyle("-fx-background-color: #00FFFF;-fx-text-fill: #483d8b; -fx-font-size: 20px;");
             bord.setCenter(lb2);
         }
         else{
@@ -626,7 +668,5 @@ public class GUI_MainStore {
         }
        return bord;
     }
-
-
 
 }

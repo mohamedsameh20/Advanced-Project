@@ -1,4 +1,5 @@
 package MainProject;
+import java.util.Collections;
 import java.util.Date;
 
 public class GUI_Data {
@@ -45,7 +46,7 @@ public class GUI_Data {
         return S;
     }
     static User UserDetails(){
-        return new User("Habbeel Nammed","habbeelnammed69@gmail.com",50000);
+        return new User("Mazen","habbeelnammed69@gmail.com",50000);
     }
 
 }
